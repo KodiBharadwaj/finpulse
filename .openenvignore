@@ -6,3 +6,31 @@ node_modules/
 data/
 *.db
 .env
+
+
+# Virtual environments
+test_env/
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Env files
+.env
+
+# Logs / outputs
+outputs/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Large unnecessary files
+*.zip
+*.tar
+*.gz
+
+
+test_env/
