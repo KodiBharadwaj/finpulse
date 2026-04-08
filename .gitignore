@@ -1,0 +1,42 @@
+# CRITICAL: Sensitive credentials - DO NOT COMMIT
+.env
+.env.local
+.env.*.local
+# But DO commit the example template
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+.venv/
+env/
+ENV/
+
+# Data
+data/
+*.db
+*.csv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Docker
+.docker/
+
+# Claude Code memory/settings
+.claude/

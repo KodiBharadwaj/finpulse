@@ -1,0 +1,83 @@
+spec_version: 1
+name: finpulse
+version: 1.0.0
+description: AI Trading Environment with Emotional Intelligence
+type: space
+runtime: fastapi
+app: server.app:app
+port: 8000
+
+# Task definitions
+tasks:
+  conservative_trading:
+    name: Conservative Trading (Easy)
+    description: Achieve 5% return with low risk and emotional stability
+    difficulty: easy
+    max_steps: 30
+    success_threshold: 0.05
+
+  balanced_trading:
+    name: Balanced Trading (Medium)
+    description: Achieve 15% return while managing emotions and risk
+    difficulty: medium
+    max_steps: 50
+    success_threshold: 0.15
+
+  aggressive_growth:
+    name: Aggressive Growth (Hard)
+    description: Achieve 30% return with optimal risk-adjusted performance
+    difficulty: hard
+    max_steps: 100
+    success_threshold: 0.30
+
+# Action space
+action_space:
+  type: object
+  properties:
+    action_type:
+      type: string
+      enum: [buy, sell, hold]
+    symbol:
+      type: string
+      enum: [AAPL, MSFT, GOOGL]
+    amount_pct:
+      type: number
+      minimum: 0.0
+      maximum: 1.0
+    user_stress:
+      type: integer
+      minimum: 1
+      maximum: 10
+    user_confidence:
+      type: integer
+      minimum: 1
+      maximum: 10
+
+# Observation space
+observation_space:
+  type: object
+  properties:
+    prices:
+      type: object
+    portfolio_value:
+      type: number
+    cash_balance:
+      type: number
+    positions:
+      type: object
+    emotional_state:
+      type: object
+    intervention:
+      type: boolean
+    intervention_reason:
+      type: string
+
+# Metadata
+author: FinPulse Team
+repository: https://github.com/saikiranworkmail13-cell/fin-pulse
+license: BSD
+tags:
+  - trading
+  - emotional-intelligence
+  - behavioral-finance
+  - risk-management
