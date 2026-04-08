@@ -1,177 +1,345 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FinPulse - AI Wealth Manager</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #333;
-            min-height: 100vh;
-            padding: 20px;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .header {
-            text-align: center;
-            color: white;
-            margin-bottom: 30px;
-        }
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        .header p {
-            font-size: 1.2em;
-            opacity: 0.9;
-        }
-        .card {
-            background: white;
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        .card h2 {
-            color: #667eea;
-            margin-bottom: 15px;
-            font-size: 1.5em;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        .metric {
-            background: #f7fafc;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #667eea;
-        }
-        .metric-label {
-            font-size: 0.85em;
-            color: #718096;
-            margin-bottom: 5px;
-        }
-        .metric-value {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #2d3748;
-        }
-        .action-panel {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-        button {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-size: 1em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        button:hover {
-            background: #5a67d8;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-        button:disabled {
-            background: #cbd5e0;
-            cursor: not-allowed;
-            transform: none;
-        }
-        .slider-group {
-            margin-bottom: 15px;
-        }
-        .slider-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #4a5568;
-        }
-        input[type="range"] {
-            width: 100%;
-            height: 8px;
-            border-radius: 5px;
-            background: #e2e8f0;
-            outline: none;
-            -webkit-appearance: none;
-        }
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #667eea;
-            cursor: pointer;
-        }
-        .slider-value {
-            display: inline-block;
-            background: #667eea;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 0.9em;
-            font-weight: 600;
-            margin-left: 10px;
-        }
-        .intervention-alert {
-            background: #fed7d7;
-            border-left: 4px solid #f56565;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
-            color: #742a2a;
-            font-weight: 500;
-        }
-        .success-alert {
-            background: #c6f6d5;
-            border-left: 4px solid #48bb78;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
-            color: #22543d;
-            font-weight: 500;
-        }
-        .positions-table {
-            width: 100%;
-            margin-top: 15px;
-            border-collapse: collapse;
-        }
-        .positions-table th,
-        .positions-table td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        .positions-table th {
-            background: #f7fafc;
-            font-weight: 600;
-            color: #4a5568;
-        }
-        .badge {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 0.85em;
-            font-weight: 600;
-        }
-        .badge-buy { background: #c6f6d5; color: #22543d; }
-        .badge-sell { background: #fed7d7; color: #742a2a; }
-        .badge-hold { background: #e2e8f0; color: #4a5568; }
+
+  <html lang="en">
+
+  <head>
+
+      <meta charset="UTF-8">
+
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+      <title>FinPulse - AI Wealth Manager</title>
+
+      <style>
+
+          * { margin: 0; padding: 0; box-sizing: border-box; }
+
+          body {
+
+              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+
+              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+              color: #333;
+
+              min-height: 100vh;
+
+              padding: 20px;
+
+          }
+
+          .container {
+
+              max-width: 1200px;
+
+              margin: 0 auto;
+
+          }
+
+          .header {
+
+              text-align: center;
+
+              color: white;
+
+              margin-bottom: 30px;
+
+          }
+
+          .header h1 {
+
+              font-size: 2.5em;
+
+              margin-bottom: 10px;
+
+              text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+
+          }
+
+          .header p {
+
+              font-size: 1.2em;
+
+              opacity: 0.9;
+
+          }
+
+          .card {
+
+              background: white;
+
+              border-radius: 12px;
+
+              padding: 24px;
+
+              margin-bottom: 20px;
+
+              box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+
+          }
+
+          .card h2 {
+
+              color: #667eea;
+
+              margin-bottom: 15px;
+
+              font-size: 1.5em;
+
+          }
+
+          .grid {
+
+              display: grid;
+
+              grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+
+              gap: 15px;
+
+              margin-bottom: 20px;
+
+          }
+
+          .metric {
+
+              background: #f7fafc;
+
+              padding: 15px;
+
+              border-radius: 8px;
+
+              border-left: 4px solid #667eea;
+
+          }
+
+          .metric-label {
+
+              font-size: 0.85em;
+
+              color: #718096;
+
+              margin-bottom: 5px;
+
+          }
+
+          .metric-value {
+
+              font-size: 1.5em;
+
+              font-weight: bold;
+
+              color: #2d3748;
+
+          }
+
+          .action-panel {
+
+              display: grid;
+
+              grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+
+              gap: 15px;
+
+              margin-top: 20px;
+
+          }
+
+          button {
+
+              background: #667eea;
+
+              color: white;
+
+              border: none;
+
+              padding: 12px 24px;
+
+              border-radius: 8px;
+
+              font-size: 1em;
+
+              font-weight: 600;
+
+              cursor: pointer;
+
+              transition: all 0.3s;
+
+          }
+
+          button:hover {
+
+              background: #5a67d8;
+
+              transform: translateY(-2px);
+
+              box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+
+          }
+
+          button:disabled {
+
+              background: #cbd5e0;
+
+              cursor: not-allowed;
+
+              transform: none;
+
+          }
+
+          .slider-group {
+
+              margin-bottom: 15px;
+
+          }
+
+          .slider-group label {
+
+              display: block;
+
+              margin-bottom: 8px;
+
+              font-weight: 600;
+
+              color: #4a5568;
+
+          }
+
+          input[type="range"] {
+
+              width: 100%;
+
+              height: 8px;
+
+              border-radius: 5px;
+
+              background: #e2e8f0;
+
+              outline: none;
+
+              -webkit-appearance: none;
+
+          }
+
+          input[type="range"]::-webkit-slider-thumb {
+
+              -webkit-appearance: none;
+
+              appearance: none;
+
+              width: 20px;
+
+              height: 20px;
+
+              border-radius: 50%;
+
+              background: #667eea;
+
+              cursor: pointer;
+
+          }
+
+          .slider-value {
+
+              display: inline-block;
+
+              background: #667eea;
+
+              color: white;
+
+              padding: 4px 12px;
+
+              border-radius: 12px;
+
+              font-size: 0.9em;
+
+              font-weight: 600;
+
+              margin-left: 10px;
+
+          }
+
+          .intervention-alert {
+
+              background: #fed7d7;
+
+              border-left: 4px solid #f56565;
+
+              padding: 15px;
+
+              border-radius: 8px;
+
+              margin-top: 15px;
+
+              color: #742a2a;
+
+              font-weight: 500;
+
+          }
+
+          .success-alert {
+
+              background: #c6f6d5;
+
+              border-left: 4px solid #48bb78;
+
+              padding: 15px;
+
+              border-radius: 8px;
+
+              margin-top: 15px;
+
+              color: #22543d;
+
+              font-weight: 500;
+
+          }
+
+          .positions-table {
+
+              width: 100%;
+
+              margin-top: 15px;
+
+              border-collapse: collapse;
+
+          }
+
+          .positions-table th,
+
+          .positions-table td {
+
+              padding: 10px;
+
+              text-align: left;
+
+              border-bottom: 1px solid #e2e8f0;
+
+          }
+
+          .positions-table th {
+
+              background: #f7fafc;
+
+              font-weight: 600;
+
+              color: #4a5568;
+
+          }
+
+          .badge {
+
+              display: inline-block;
+
+              padding: 4px 8px;
+
+              border-radius: 12px;
+
+              font-size: 0.85em;
+
+              font-weight: 600;
+
+          }
+
           .badge-buy { background: #c6f6d5; color: #22543d; }
 
           .badge-sell { background: #fed7d7; color: #742a2a; }
@@ -184,29 +352,47 @@
 
           .badge-hard { background: #fed7d7; color: #742a2a; }
 
-        .status-indicator {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            margin-right: 8px;
-        }
-        .status-online { background: #48bb78; }
-        .status-offline { background: #f56565; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>🫀 FinPulse</h1>
-            <p>AI Wealth Manager with Emotional Intelligence</p>
-            <p style="font-size: 0.9em; margin-top: 10px;">
-                <span class="status-indicator status-online" id="statusDot"></span>
-                <span id="statusText">Connecting...</span>
-            </p>
-        </div>
+          .status-indicator {
 
-         </div>
+              display: inline-block;
+
+              width: 10px;
+
+              height: 10px;
+
+              border-radius: 50%;
+
+              margin-right: 8px;
+
+          }
+
+          .status-online { background: #48bb78; }
+
+          .status-offline { background: #f56565; }
+
+      </style>
+
+  </head>
+
+  <body>
+
+      <div class="container">
+
+          <div class="header">
+
+              <h1>🫀 FinPulse</h1>
+
+              <p>AI Wealth Manager with Emotional Intelligence</p>
+
+              <p style="font-size: 0.9em; margin-top: 10px;">
+
+                  <span class="status-indicator status-online" id="statusDot"></span>
+
+                  <span id="statusText">Connecting...</span>
+
+              </p>
+
+          </div>
 
 
 
@@ -216,65 +402,43 @@
 
               <div class="task-info" id="currentTaskInfo">
 
-                  <div style="display: flex; justify-content: space-between;
-
-  align-items: center; margin-bottom: 15px;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
 
                       <div>
 
-                          <div style="font-size: 1.2em; font-weight: bold;
+                          <div style="font-size: 1.2em; font-weight: bold; color: #667eea;" id="taskName">Loading...</div>
 
-  color: #667eea;" id="taskName">Loading...</div>
-
-                          <div style="font-size: 0.9em; color: #718096;
-
-  margin-top: 5px;" id="taskDescription">Select a difficulty level</div>
+                          <div style="font-size: 0.9em; color: #718096; margin-top: 5px;" id="taskDescription">Select a difficulty level</div>
 
                       </div>
 
-                      <span class="badge" id="taskBadge" style="font-size: 1em;
-
-  padding: 8px 16px;">-</span>
+                      <span class="badge" id="taskBadge" style="font-size: 1em; padding: 8px 16px;">-</span>
 
                   </div>
 
-                  <div style="display: grid; grid-template-columns: repeat(3,
+                  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; font-size: 0.9em;">
 
-  1fr); gap: 10px; font-size: 0.9em;">
-
-                      <div style="background: #f7fafc; padding: 10px;
-
-  border-radius: 6px;">
+                      <div style="background: #f7fafc; padding: 10px; border-radius: 6px;">
 
                           <div style="color: #718096;">Max Steps</div>
 
-                          <div style="font-weight: bold; color: #2d3748;" 
-
-  id="taskMaxSteps">-</div>
+                          <div style="font-weight: bold; color: #2d3748;" id="taskMaxSteps">-</div>
 
                       </div>
 
-                      <div style="background: #f7fafc; padding: 10px;
-
-  border-radius: 6px;">
+                      <div style="background: #f7fafc; padding: 10px; border-radius: 6px;">
 
                           <div style="color: #718096;">Success Target</div>
 
-                          <div style="font-weight: bold; color: #2d3748;" 
-
-  id="taskSuccessThreshold">-</div>
+                          <div style="font-weight: bold; color: #2d3748;" id="taskSuccessThreshold">-</div>
 
                       </div>
 
-                      <div style="background: #f7fafc; padding: 10px;
-
-  border-radius: 6px;">
+                      <div style="background: #f7fafc; padding: 10px; border-radius: 6px;">
 
                           <div style="color: #718096;">Difficulty</div>
 
-                          <div style="font-weight: bold; color: #2d3748;" 
-
-  id="taskDifficulty">-</div>
+                          <div style="font-weight: bold; color: #2d3748;" id="taskDifficulty">-</div>
 
                       </div>
 
@@ -284,25 +448,19 @@
 
               <div class="action-panel" style="margin-top: 20px;">
 
-                  <button onclick="selectTask('conservative_trading')" 
-
-  style="background: #48bb78;">
+                  <button onclick="selectTask('conservative_trading')" style="background: #48bb78;">
 
                       😌 Easy
 
                   </button>
 
-                  <button onclick="selectTask('balanced_trading')" 
-
-  style="background: #ed8936;">
+                  <button onclick="selectTask('balanced_trading')" style="background: #ed8936;">
 
                       ⚖️  Medium
 
                   </button>
 
-                  <button onclick="selectTask('aggressive_growth')" 
-
-  style="background: #f56565;">
+                  <button onclick="selectTask('aggressive_growth')" style="background: #f56565;">
 
                       🚀 Hard
 
@@ -312,98 +470,159 @@
 
           </div>
 
-        <div class="card">
-            <h2>📊 Portfolio Overview</h2>
-            <div class="grid">
-                <div class="metric">
-                    <div class="metric-label">Portfolio Value</div>
-                    <div class="metric-value" id="portfolioValue">$10,000.00</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-label">Cash Balance</div>
-                    <div class="metric-value" id="cashBalance">$10,000.00</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-label">Total Return</div>
-                    <div class="metric-value" id="totalReturn">0.00%</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-label">Episode Step</div>
-                    <div class="metric-value" id="stepCount">0</div>
-                </div>
-            </div>
 
-            <h3 style="margin-top: 20px; margin-bottom: 10px; color: #4a5568;">Current Prices</h3>
-            <table class="positions-table">
-                <thead>
-                    <tr>
-                        <th>Symbol</th>
-                        <th>Price</th>
-                        <th>Your Shares</th>
-                        <th>Value</th>
-                    </tr>
-                </thead>
-                <tbody id="pricesTable">
-                    <tr><td colspan="4" style="text-align: center; color: #a0aec0;">Reset to load data</td></tr>
-                </tbody>
-            </table>
-        </div>
 
-        <div class="card">
-            <h2>😰 Your Emotional State</h2>
-            <div class="slider-group">
-                <label>
-                    Stress Level
-                    <span class="slider-value" id="stressValue">5</span>
-                </label>
-                <input type="range" id="stressSlider" min="1" max="10" value="5">
-            </div>
-            <div class="slider-group">
-                <label>
-                    Confidence Level
-                    <span class="slider-value" id="confidenceValue">5</span>
-                </label>
-                <input type="range" id="confidenceSlider" min="1" max="10" value="5">
-            </div>
-        </div>
+          <div class="card">
 
-        <div class="card">
-            <h2>💼 Trading Actions</h2>
-            <div class="action-panel">
-                <button onclick="trade('buy', 'AAPL')">📈 Buy AAPL</button>
-                <button onclick="trade('buy', 'MSFT')">📈 Buy MSFT</button>
-                <button onclick="trade('buy', 'GOOGL')">📈 Buy GOOGL</button>
-            </div>
-            <div class="action-panel" style="margin-top: 10px;">
-                <button onclick="trade('sell', 'AAPL')" style="background: #f56565;">📉 Sell AAPL</button>
-                <button onclick="trade('sell', 'MSFT')" style="background: #f56565;">📉 Sell MSFT</button>
-                <button onclick="trade('sell', 'GOOGL')" style="background: #f56565;">📉 Sell GOOGL</button>
-            </div>
-            <div class="action-panel" style="margin-top: 10px;">
+              <h2>📊 Portfolio Overview</h2>
 
-                  <button onclick="trade('hold')" style="background:
+              <div class="grid">
 
-  #718096;">⏸️  Hold Position</button>
+                  <div class="metric">
 
-                  <button onclick="resetEnv()" style="background: #ed8936;">🔄
+                      <div class="metric-label">Portfolio Value</div>
 
-  Reset Episode</button>
+                      <div class="metric-value" id="portfolioValue">$10,000.00</div>
+
+                  </div>
+
+                  <div class="metric">
+
+                      <div class="metric-label">Cash Balance</div>
+
+                      <div class="metric-value" id="cashBalance">$10,000.00</div>
+
+                  </div>
+
+                  <div class="metric">
+
+                      <div class="metric-label">Total Return</div>
+
+                      <div class="metric-value" id="totalReturn">0.00%</div>
+
+                  </div>
+
+                  <div class="metric">
+
+                      <div class="metric-label">Episode Step</div>
+
+                      <div class="metric-value" id="stepCount">0</div>
+
+                  </div>
+
+              </div>
+
+
+
+              <h3 style="margin-top: 20px; margin-bottom: 10px; color: #4a5568;">Current Prices</h3>
+
+              <table class="positions-table">
+
+                  <thead>
+
+                      <tr>
+
+                          <th>Symbol</th>
+
+                          <th>Price</th>
+
+                          <th>Your Shares</th>
+
+                          <th>Value</th>
+
+                      </tr>
+
+                  </thead>
+
+                  <tbody id="pricesTable">
+
+                      <tr><td colspan="4" style="text-align: center; color: #a0aec0;">Reset to load data</td></tr>
+
+                  </tbody>
+
+              </table>
+
+          </div>
+
+
+
+          <div class="card">
+
+              <h2>😰 Your Emotional State</h2>
+
+              <div class="slider-group">
+
+                  <label>
+
+                      Stress Level
+
+                      <span class="slider-value" id="stressValue">5</span>
+
+                  </label>
+
+                  <input type="range" id="stressSlider" min="1" max="10" value="5">
+
+              </div>
+
+              <div class="slider-group">
+
+                  <label>
+
+                      Confidence Level
+
+                      <span class="slider-value" id="confidenceValue">5</span>
+
+                  </label>
+
+                  <input type="range" id="confidenceSlider" min="1" max="10" value="5">
+
+              </div>
+
+          </div>
+
+
+
+          <div class="card">
+
+              <h2>💼 Trading Actions</h2>
+
+              <div class="action-panel">
+
+                  <button onclick="trade('buy', 'AAPL')">📈 Buy AAPL</button>
+
+                  <button onclick="trade('buy', 'MSFT')">📈 Buy MSFT</button>
+
+                  <button onclick="trade('buy', 'GOOGL')">📈 Buy GOOGL</button>
 
               </div>
 
               <div class="action-panel" style="margin-top: 10px;">
 
-                  <button id="autoTradeBtn" onclick="startAutoTrade()" 
+                  <button onclick="trade('sell', 'AAPL')" style="background: #f56565;">📉 Sell AAPL</button>
 
-  style="background: #9f7aea;">
+                  <button onclick="trade('sell', 'MSFT')" style="background: #f56565;">📉 Sell MSFT</button>
+
+                  <button onclick="trade('sell', 'GOOGL')" style="background: #f56565;">📉 Sell GOOGL</button>
+
+              </div>
+
+              <div class="action-panel" style="margin-top: 10px;">
+
+                  <button onclick="trade('hold')" style="background: #718096;">⏸️  Hold Position</button>
+
+                  <button onclick="resetEnv()" style="background: #ed8936;">🔄 Reset Episode</button>
+
+              </div>
+
+              <div class="action-panel" style="margin-top: 10px;">
+
+                  <button id="autoTradeBtn" onclick="startAutoTrade()" style="background: #9f7aea;">
 
                       🤖 Auto-Trade (50 Steps)
 
                   </button>
 
-                  <button id="stopAutoBtn" onclick="stopAutoTrade()" 
-
-  style="background: #e53e3e; display: none;">
+                  <button id="stopAutoBtn" onclick="stopAutoTrade()" style="background: #e53e3e; display: none;">
 
                       ⛔ Stop Auto-Trade
 
@@ -411,96 +630,99 @@
 
               </div>
 
-              <div id="autoTradeProgress" style="margin-top: 15px; display:
+              <div id="autoTradeProgress" style="margin-top: 15px; display: none;">
 
-  none;">
+                  <div style="background: #f7fafc; padding: 15px; border-radius: 8px;">
 
-                  <div style="background: #f7fafc; padding: 15px; border-radius:
+                      <div style="font-weight: 600; margin-bottom: 10px;">Auto-Trading Progress</div>
 
-   8px;">
+                      <div style="background: #e2e8f0; height: 10px; border-radius: 5px; overflow: hidden;">
 
-                      <div style="font-weight: 600; margin-bottom:
+                          <div id="progressBar" style="background: #667eea; height: 100%; width: 0%; transition: width 0.3s;"></div>                                                                                                                
 
-  10px;">Auto-Trading Progress</div>
+                      </div>                                                                                                                                                                                                                        
 
-                      <div style="background: #e2e8f0; height: 10px;
+                      <div style="margin-top: 10px; font-size: 0.9em; color: #4a5568;">                                                                                                                                                             
 
-  border-radius: 5px; overflow: hidden;">
+                          Step <span id="autoStepCount">0</span> / 50 | Profit: <span id="autoProfitCount" style="font-weight: bold;">+0.00%</span>                                                                                                 
 
-                          <div id="progressBar" style="background: #667eea;
+                      </div>                                                                                                                                                                                                                        
 
-  height: 100%; width: 0%; transition: width 0.3s;"></div>
+                  </div>                                                                                                                                                                                                                            
 
-                      </div>
+              </div>                                                                                                                                                                                                                                
 
-                      <div style="margin-top: 10px; font-size: 0.9em; color:
+              <div id="alertBox"></div>                                                                                                                                                                                                             
 
-  #4a5568;">
+          </div>                                                                                                                                                                                                                                    
 
-                          Step <span id="autoStepCount">0</span> / 50 | Profit:
+      </div>                                                                                                                                                                                                                                        
 
-  <span id="autoProfitCount" style="font-weight: bold;">+0.00%</span>
+                                                                                                                                                                                                                                                    
 
-                      </div>
+      <script>                                                                                                                                                                                                                                      
 
-                  </div>
+          let currentPrices = {};
 
-              </div>
-            <div id="alertBox"></div>
-        </div>
-    </div>
+          let initialBalance = 10000;                                                                                                                                                                                                               
 
-    <script>
-        let currentPrices = {};
-        let initialBalance = 10000;
+          let allTasks = {};                                                                                                                                                                                                                        
 
-        // Update slider displays
-        document.getElementById('stressSlider').addEventListener('input', (e) => {
-            document.getElementById('stressValue').textContent = e.target.value;
-        });
-        document.getElementById('confidenceSlider').addEventListener('input', (e) => {
-            document.getElementById('confidenceValue').textContent = e.target.value;
-        });
+          let currentTask = null;                                                                                                                                                                                                                   
 
-          let allTasks = {};
+                                                                                                                                                                                                                                                    
 
-          let currentTask = null;
+          // Update slider displays                                                                                                                                                                                                                 
 
+          document.getElementById('stressSlider').addEventListener('input', (e) => {                                                                                                                                                                
 
+              document.getElementById('stressValue').textContent = e.target.value;                                                                                                                                                                  
+
+          });                                                                                                                                                                                                                                       
+
+          document.getElementById('confidenceSlider').addEventListener('input', (e) => {                                                                                                                                                            
+
+              document.getElementById('confidenceValue').textContent = e.target.value;                                                                                                                                                              
+
+          });                                                                                                                                                                                                                                       
+
+                                                                                                                                                                                                                                                    
+
+          // Task management functions                                                                                                                                                                                                              
 
           async function loadTasks() {
 
-              try {
+              try {                                                                                                                                                                                                                                 
 
-                  const response = await fetch('/tasks');
+                  const response = await fetch('/tasks');                                                                                                                                                                                           
 
-                  allTasks = await response.json();
+                  allTasks = await response.json();                                                                                                                                                                                                 
 
-                  await loadCurrentTask();
+                  await loadCurrentTask();                                                                                                                                                                                                          
 
-              } catch (error) {
+              } catch (error) {                                                                                                                                                                                                                     
 
-                  console.error('Failed to load tasks:', error);
+                  console.error('Failed to load tasks:', error);                                                                                                                                                                                    
 
-              }
+              }                                                                                                                                                                                                                                     
 
-          }
+          }                                                                                                                                                                                                                                         
 
+                                                                                                                                                                                                                                                    
 
+          async function loadCurrentTask() {                                                                                                                                                                                                        
 
-          async function loadCurrentTask() {
+              try {                                                                                                                                                                                                                                 
 
-              try {
+                  const response = await fetch('/current_task');                                                                                                                                                                                    
 
-                  const response = await fetch('/current_task');
+                  currentTask = await response.json();                                                                                                                                                                                              
 
-                  currentTask = await response.json();
+                  updateTaskDisplay(currentTask);                                                                                                                                                                                                   
 
-                  updateTaskDisplay(currentTask);
+              } catch (error) {                                                                                                                                                                                                                     
 
-              } catch (error) {
-
-                  console.error('Failed to load current task:', error);
+                  console.error('Failed to load current task:', error);                                                                                                                                                                             
 
               }
 
@@ -512,13 +734,9 @@
 
               try {
 
-                  const response = await fetch('/set_task', {
+                  const response = await fetch('/set_task?task=' + taskId, {
 
-                      method: 'POST',
-
-                      headers: { 'Content-Type': 'application/json' },
-
-                      body: JSON.stringify({ task: taskId })
+                      method: 'POST'
 
                   });
 
@@ -528,59 +746,49 @@
 
                       const error = await response.json();
 
-                      showAlert(`Failed to switch task: ${error.detail}`,
+                      showAlert(`Failed to switch task: ${error.detail}`, 'intervention');
 
-  'intervention');
-
-                      return;
+                      return;                                                                                                                                                                                                                       
 
                   }
 
+                                                                                                                                                                                                                                                    
 
+                  currentTask = await response.json();                                                                                                                                                                                              
 
-                  currentTask = await response.json();
+                  updateTaskDisplay(currentTask);                                                                                                                                                                                                   
 
-                  updateTaskDisplay(currentTask);
+                  showAlert(`✅ Switched to ${currentTask.name}! Click Reset to start.`, 'success');                                                                                                                                                
 
-                  showAlert(`✅ Switched to ${currentTask.name}! Click Reset to
+              } catch (error) {                                                                                                                                                                                                                     
 
-  start.`, 'success');
+                  showAlert(`Error switching task: ${error.message}`, 'intervention');                                                                                                                                                              
 
-              } catch (error) {
+              }                                                                                                                                                                                                                                     
 
-                  showAlert(`Error switching task: ${error.message}`,
+          }                                                                                                                                                                                                                                         
 
-  'intervention');
+                                                                                                                                                                                                                                                    
 
-              }
-
-          }
-
-
-
-          function updateTaskDisplay(taskInfo) {
+          function updateTaskDisplay(taskInfo) {                                                                                                                                                                                                    
 
               document.getElementById('taskName').textContent = taskInfo.name;
 
-              document.getElementById('taskMaxSteps').textContent =
+              document.getElementById('taskMaxSteps').textContent = taskInfo.max_steps;                                                                                                                                                             
 
-  taskInfo.max_steps;
+              document.getElementById('taskSuccessThreshold').textContent =                                                                                                                                                                         
 
-              document.getElementById('taskSuccessThreshold').textContent =
+                  (taskInfo.success_threshold * 100).toFixed(0) + '%';                                                                                                                                                                              
 
-                  (taskInfo.success_threshold * 100).toFixed(0) + '%';
+              document.getElementById('taskDifficulty').textContent =                                                                                                                                                                               
 
-              document.getElementById('taskDifficulty').textContent =
+                  taskInfo.difficulty.charAt(0).toUpperCase() + taskInfo.difficulty.slice(1);                                                                                                                                                       
 
-                  taskInfo.difficulty.charAt(0).toUpperCase() +
-
-  taskInfo.difficulty.slice(1);
-
-
+                                                                                                                                                                                                                                                    
 
               const badge = document.getElementById('taskBadge');
 
-              badge.textContent = taskInfo.difficulty.toUpperCase();
+              badge.textContent = taskInfo.difficulty.toUpperCase();                                                                                                                                                                                
 
               badge.className = 'badge badge-' + taskInfo.difficulty;
 
@@ -588,64 +796,239 @@
 
               // Update description from allTasks if available
 
-              if (allTasks && allTasks[taskInfo.task]) {
+              const taskKey = Object.keys(allTasks).find(key =>
 
-                  document.getElementById('taskDescription').textContent =
+                  allTasks[key].difficulty === taskInfo.difficulty                                                                                                                                                                                  
 
-                      allTasks[taskInfo.task].description;
+              );                                                                                                                                                                                                                                    
 
-              }
+              if (taskKey && allTasks[taskKey]) {                                                                                                                                                                                                   
 
-          }
+                  document.getElementById('taskDescription').textContent =                                                                                                                                                                          
 
-        async function checkHealth() {
-            try {
-                const response = await fetch('/health');
-                const data = await response.json();
-                if (data.status === 'healthy') {
-                    document.getElementById('statusDot').className = 'status-indicator status-online';
-                    document.getElementById('statusText').textContent = 'Server Online';
-                    return true;
-                }
-            } catch (error) {
-                document.getElementById('statusDot').className = 'status-indicator status-offline';
-                document.getElementById('statusText').textContent = 'Server Offline';
-                return false;
-            }
-        }
+                      allTasks[taskKey].description;                                                                                                                                                                                                
 
-        async function resetEnv() {
-            const response = await fetch('/reset', { method: 'POST' });
-            const obs = await response.json();
-            updateUI(obs, 'Environment reset! Ready to trade.');
-        }
+              }                                                                                                                                                                                                                                     
+
+          }                                                                                                                                                                                                                                         
+
+                                                                                                                                                                                                                                                    
+
+          async function checkHealth() {                                                                                                                                                                                                            
+
+              try {
+
+                  const response = await fetch('/health');                                                                                                                                                                                          
+
+                  const data = await response.json();                                                                                                                                                                                               
+
+                  if (data.status === 'healthy') {                                                                                                                                                                                                  
+
+                      document.getElementById('statusDot').className = 'status-indicator status-online';                                                                                                                                            
+
+                      document.getElementById('statusText').textContent = 'Server Online';                                                                                                                                                          
+
+                      return true;                                                                                                                                                                                                                  
+
+                  }                                                                                                                                                                                                                                 
+
+              } catch (error) {                                                                                                                                                                                                                     
+
+                  document.getElementById('statusDot').className = 'status-indicator status-offline';                                                                                                                                               
+
+                  document.getElementById('statusText').textContent = 'Server Offline';                                                                                                                                                             
+
+                  return false;                                                                                                                                                                                                                     
+
+              }                                                                                                                                                                                                                                     
+
+          }                                                                                                                                                                                                                                         
+
+                                                                                                                                                                                                                                                    
+
+          async function resetEnv() {                                                                                                                                                                                                               
+
+              const response = await fetch('/reset', { method: 'POST' });                                                                                                                                                                           
+
+              const obs = await response.json();                                                                                                                                                                                                    
+
+              updateUI(obs, 'Environment reset! Ready to trade.');                                                                                                                                                                                  
+
+          }                                                                                                                                                                                                                                         
+
+                                                                                                                                                                                                                                                    
+
+          async function trade(actionType, symbol = 'AAPL') {                                                                                                                                                                                       
+
+              const stress = parseInt(document.getElementById('stressSlider').value);                                                                                                                                                               
+
+              const confidence = parseInt(document.getElementById('confidenceSlider').value);                                                                                                                                                       
 
 
-let autoTradeRunning = false;
 
-          let autoTradeSteps = 0;
+              const action = {                                                                                                                                                                                                                      
 
-          const AUTO_TRADE_MAX_STEPS = 50;
+                  action_type: actionType,
+
+                  symbol: symbol,                                                                                                                                                                                                                   
+
+                  amount_pct: 0.3,
+
+                  user_stress: stress,
+
+                  user_confidence: confidence
+
+              };
 
 
 
-          async function startAutoTrade() {
+              const response = await fetch('/step', {
 
-              if (autoTradeRunning) return;
+                  method: 'POST',
+
+                  headers: { 'Content-Type': 'application/json' },
+
+                  body: JSON.stringify(action)                                                                                                                                                                                                      
+
+              });
+
+              const obs = await response.json();                                                                                                                                                                                                    
+
+                                                                                                                                                                                                                                                    
+
+              if (obs.intervention) {                                                                                                                                                                                                               
+
+                  showAlert(obs.intervention_reason, 'intervention');                                                                                                                                                                               
+
+              } else {                                                                                                                                                                                                                              
+
+                  const actionText = actionType === 'hold' ? 'Held position' : `${actionType.toUpperCase()} ${symbol}`;                                                                                                                             
+
+                  showAlert(`✅ ${actionText} | Reward: +${obs.reward.toFixed(2)}`, 'success');                                                                                                                                                     
+
+              }                                                                                                                                                                                                                                     
+
+                                                                                                                                                                                                                                                    
+
+              updateUI(obs);                                                                                                                                                                                                                        
+
+          }                                                                                                                                                                                                                                         
+
+                                                                                                                                                                                                                                                    
+
+          function updateUI(obs, message = null) {                                                                                                                                                                                                  
+
+              // Update metrics
+
+              document.getElementById('portfolioValue').textContent =                                                                                                                                                                               
+
+                  '$' + obs.portfolio_value.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');                                                                                                                                                       
+
+              document.getElementById('cashBalance').textContent =                                                                                                                                                                                  
+
+                  '$' + obs.cash_balance.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');                                                                                                                                                          
+
+              document.getElementById('stepCount').textContent = obs.metadata.step;                                                                                                                                                                 
+
+                                                                                                                                                                                                                                                    
+
+              const returnPct = ((obs.portfolio_value - initialBalance) / initialBalance * 100).toFixed(2);                                                                                                                                         
+
+              document.getElementById('totalReturn').textContent = returnPct + '%';                                                                                                                                                                 
+
+              document.getElementById('totalReturn').style.color = returnPct >= 0 ? '#48bb78' : '#f56565';                                                                                                                                          
+
+                                                                                                                                                                                                                                                    
+
+              // Update prices table                                                                                                                                                                                                                
+
+              currentPrices = obs.prices;                                                                                                                                                                                                           
+
+              const tbody = document.getElementById('pricesTable');                                                                                                                                                                                 
+
+              tbody.innerHTML = '';                                                                                                                                                                                                                 
+
+                                                                                                                                                                                                                                                    
+
+              Object.entries(obs.prices).forEach(([symbol, price]) => {                                                                                                                                                                             
+
+                  const shares = obs.positions[symbol] || 0;                                                                                                                                                                                        
+
+                  const value = shares * price;                                                                                                                                                                                                     
+
+                                                                                                                                                                                                                                                    
+
+                  const row = tbody.insertRow();                                                                                                                                                                                                    
+
+                  row.innerHTML = `                                                                                                                                                                                                                 
+
+                      <td><strong>${symbol}</strong></td>                                                                                                                                                                                           
+
+                      <td>$${price.toFixed(2)}</td>                                                                                                                                                                                                 
+
+                      <td>${shares}</td>                                                                                                                                                                                                            
+
+                      <td>$${value.toFixed(2)}</td>                                                                                                                                                                                                 
+
+                  `;                                                                                                                                                                                                                                
+
+              });                                                                                                                                                                                                                                   
+
+                                                                                                                                                                                                                                                    
+
+              if (message) {                                                                                                                                                                                                                        
+
+                  showAlert(message, 'success');
+
+              }                                                                                                                                                                                                                                     
+
+          }                                                                                                                                                                                                                                         
+
+                                                                                                                                                                                                                                                    
+
+          function showAlert(message, type) {                                                                                                                                                                                                       
+
+              const alertBox = document.getElementById('alertBox');
+
+              const alertClass = type === 'intervention' ? 'intervention-alert' : 'success-alert';                                                                                                                                                  
+
+              alertBox.innerHTML = `<div class="${alertClass}">${message}</div>`;                                                                                                                                                                   
+
+                                                                                                                                                                                                                                                    
+
+              setTimeout(() => {                                                                                                                                                                                                                    
+
+                  alertBox.innerHTML = '';                                                                                                                                                                                                          
+
+              }, 5000);                                                                                                                                                                                                                             
+
+          }                                                                                                                                                                                                                                         
+
+                                                                                                                                                                                                                                                    
+
+          // Auto-trade functionality                                                                                                                                                                                                               
+
+          let autoTradeRunning = false;                                                                                                                                                                                                             
+
+          let autoTradeSteps = 0;                                                                                                                                                                                                                   
+
+          const AUTO_TRADE_MAX_STEPS = 50;                                                                                                                                                                                                          
+
+                                                                                                                                                                                                                                                    
+
+          async function startAutoTrade() {                                                                                                                                                                                                         
+
+              if (autoTradeRunning) return;                                                                                                                                                                                                         
 
 
 
-              autoTradeRunning = true;
+              autoTradeRunning = true;                                                                                                                                                                                                              
 
               autoTradeSteps = 0;
 
+                                                                                                                                                                                                                                                    
 
-
-              // Show progress UI
-
-              document.getElementById('autoTradeProgress').style.display =
-
-  'block';
+              document.getElementById('autoTradeProgress').style.display = 'block';
 
               document.getElementById('autoTradeBtn').style.display = 'none';
 
@@ -653,29 +1036,21 @@ let autoTradeRunning = false;
 
 
 
-              // Disable manual trading buttons
-
-              const buttons = document.querySelectorAll('.action-panel button');
+              const buttons = document.querySelectorAll('.action-panel button');                                                                                                                                                                    
 
               buttons.forEach(btn => {
 
-                  if (btn.id !== 'stopAutoBtn') btn.disabled = true;
+                  if (btn.id !== 'stopAutoBtn') btn.disabled = true;                                                                                                                                                                                
 
               });
 
 
 
-              showAlert('🤖 Auto-trading started! Using smart strategy...',
-
-  'success');
-
-
-
-              // Run trading loop
+              showAlert('🤖 Auto-trading started! Using smart strategy...', 'success');                                                                                                                                                             
 
               await autoTradeLoop();
 
-          }
+          }                                                                                                                                                                                                                                         
 
 
 
@@ -687,23 +1062,19 @@ let autoTradeRunning = false;
 
               document.getElementById('stopAutoBtn').style.display = 'none';
 
-              document.getElementById('autoTradeProgress').style.display =
+              document.getElementById('autoTradeProgress').style.display = 'none';
 
-  'none';
+                                                                                                                                                                                                                                                    
 
+              const buttons = document.querySelectorAll('.action-panel button');                                                                                                                                                                    
 
+              buttons.forEach(btn => btn.disabled = false);                                                                                                                                                                                         
 
-              // Re-enable buttons
-
-              const buttons = document.querySelectorAll('.action-panel button');
-
-              buttons.forEach(btn => btn.disabled = false);
-
-
+                                                                                                                                                                                                                                                    
 
               showAlert('⛔ Auto-trading stopped!', 'intervention');
 
-          }
+          }                                                                                                                                                                                                                                         
 
 
 
@@ -713,282 +1084,176 @@ let autoTradeRunning = false;
 
 
 
-              while (autoTradeRunning && autoTradeSteps < AUTO_TRADE_MAX_STEPS)
-
-  {
+              while (autoTradeRunning && autoTradeSteps < AUTO_TRADE_MAX_STEPS) {
 
                   autoTradeSteps++;
 
+                                                                                                                                                                                                                                                    
 
+                  const progress = (autoTradeSteps / AUTO_TRADE_MAX_STEPS) * 100;                                                                                                                                                                   
 
-                  // Update progress
+                  document.getElementById('progressBar').style.width = progress + '%';                                                                                                                                                              
 
-                  const progress = (autoTradeSteps / AUTO_TRADE_MAX_STEPS) *
+                  document.getElementById('autoStepCount').textContent = autoTradeSteps;                                                                                                                                                            
 
-  100;
+                                                                                                                                                                                                                                                    
 
-                  document.getElementById('progressBar').style.width = progress
+                  const action = await decideSmartAction();                                                                                                                                                                                         
 
-  + '%';
+                                                                                                                                                                                                                                                    
 
-                  document.getElementById('autoStepCount').textContent =
+                  try {                                                                                                                                                                                                                             
 
-  autoTradeSteps;
+                      const stress = Math.floor(Math.random() * 3) + 4;
 
+                      const confidence = Math.floor(Math.random() * 3) + 5;                                                                                                                                                                         
 
+                                                                                                                                                                                                                                                    
 
-                  // Smart trading strategy
+                      const response = await fetch('/step', {                                                                                                                                                                                       
 
-                  const action = await decideSmartAction();
+                          method: 'POST',                                                                                                                                                                                                           
 
+                          headers: { 'Content-Type': 'application/json' },                                                                                                                                                                          
 
+                          body: JSON.stringify({                                                                                                                                                                                                    
 
-                  // Execute trade
+                              action_type: action.type,                                                                                                                                                                                             
 
-                  try {
+                              symbol: action.symbol,                                                                                                                                                                                                
 
-                      const stress = Math.floor(Math.random() * 3) + 4; 
+                              amount_pct: action.amount,                                                                                                                                                                                            
 
-                      const confidence = Math.floor(Math.random() * 3) + 5; 
+                              user_stress: stress,                                                                                                                                                                                                  
 
+                              user_confidence: confidence                                                                                                                                                                                           
 
+                          })                                                                                                                                                                                                                        
 
-                      const response = await fetch('/step', {
+                      });                                                                                                                                                                                                                           
 
-                          method: 'POST',
+                                                                                                                                                                                                                                                    
 
-                          headers: { 'Content-Type': 'application/json' },
+                      const obs = await response.json();                                                                                                                                                                                            
 
-                          body: JSON.stringify({
+                      updateUI(obs, null);                                                                                                                                                                                                          
 
-                              action_type: action.type,
+                                                                                                                                                                                                                                                    
 
-                              symbol: action.symbol,
+                      const currentValue = obs.portfolio_value;                                                                                                                                                                                     
 
-                              amount_pct: action.amount,
+                      const profit = ((currentValue - startingValue) / startingValue) * 100;                                                                                                                                                        
 
-                              user_stress: stress,
+                      const profitSpan = document.getElementById('autoProfitCount');                                                                                                                                                                
 
-                              user_confidence: confidence
+                      profitSpan.textContent = (profit >= 0 ? '+' : '') + profit.toFixed(2) + '%';                                                                                                                                                  
 
-                          })
+                      profitSpan.style.color = profit >= 0 ? '#48bb78' : '#f56565';                                                                                                                                                                 
 
-                      });
+                                                                                                                                                                                                                                                    
 
+                      await new Promise(resolve => setTimeout(resolve, 500));                                                                                                                                                                       
 
+                                                                                                                                                                                                                                                    
 
-                      const obs = await response.json();
-
-                      updateUI(obs, null);
-
-
-
-                      // Update profit
-
-                      const currentValue = obs.portfolio_value;
-
-                      const profit = ((currentValue - startingValue) /
-
-  startingValue) * 100;
-
-                      const profitSpan =
-
-  document.getElementById('autoProfitCount');
-
-                      profitSpan.textContent = (profit >= 0 ? '+' : '') +
-
-  profit.toFixed(2) + '%';
-
-                      profitSpan.style.color = profit >= 0 ? '#48bb78' :
-
-  '#f56565';
-
-
-
-                      // Small delay between trades
-
-                      await new Promise(resolve => setTimeout(resolve, 500));
-
-
-
-                  } catch (error) {
+                  } catch (error) {                                                                                                                                                                                                                 
 
                       console.error('Auto-trade error:', error);
 
-                      stopAutoTrade();
+                      stopAutoTrade();                                                                                                                                                                                                              
 
-                      showAlert('❌ Auto-trade error: ' + error.message,
+                      showAlert('❌ Auto-trade error: ' + error.message, 'intervention');                                                                                                                                                           
 
-  'intervention');
+                      return;                                                                                                                                                                                                                       
 
-                      return;
+                  }                                                                                                                                                                                                                                 
 
-                  }
+              }                                                                                                                                                                                                                                     
 
-              }
+                                                                                                                                                                                                                                                    
 
+              if (autoTradeSteps >= AUTO_TRADE_MAX_STEPS) {                                                                                                                                                                                         
 
+                  const finalValue = parseFloat(document.getElementById('portfolioValue').textContent.replace(/[$,]/g, ''));                                                                                                                        
 
-              // Finished
+                  const totalProfit = ((finalValue - startingValue) / startingValue) * 100;                                                                                                                                                         
 
-              if (autoTradeSteps >= AUTO_TRADE_MAX_STEPS) {
+                  showAlert(`✅ Auto-trading complete! Total return: ${totalProfit.toFixed(2)}%`, 'success');                                                                                                                                       
 
-                  const finalValue = parseFloat(document.getElementById('portfolioValue').textContent.replace(/[$,]/g, ''));
+              }                                                                                                                                                                                                                                     
 
-                  const totalProfit = ((finalValue - startingValue) /
+                                                                                                                                                                                                                                                    
 
-  startingValue) * 100;
+              stopAutoTrade();                                                                                                                                                                                                                      
 
-                  showAlert(`✅ Auto-trading complete! Total return:
+          }                                                                                                                                                                                                                                         
 
-  ${totalProfit.toFixed(2)}%`, 'success');
+                                                                                                                                                                                                                                                    
 
-              }
+          async function decideSmartAction() {                                                                                                                                                                                                      
 
+              const symbols = ['AAPL', 'MSFT', 'GOOGL'];                                                                                                                                                                                            
 
+              const portfolioValue = parseFloat(document.getElementById('portfolioValue').textContent.replace(/[$,]/g, ''));                                                                                                                        
 
-              stopAutoTrade();
+              const cashBalance = parseFloat(document.getElementById('cashBalance').textContent.replace(/[$,]/g, ''));                                                                                                                              
 
-          }
+                                                                                                                                                                                                                                                    
 
+              if (cashBalance / portfolioValue > 0.3) {                                                                                                                                                                                             
 
+                  const symbol = symbols[Math.floor(Math.random() * symbols.length)];                                                                                                                                                               
 
-          async function decideSmartAction() {
+                  return { type: 'buy', symbol: symbol, amount: 0.2 };                                                                                                                                                                              
 
-              // Simple momentum strategy
+              } else if (cashBalance / portfolioValue < 0.1) {                                                                                                                                                                                      
 
-              const pricesTable = document.getElementById('pricesTable');
+                  const symbol = symbols[Math.floor(Math.random() * symbols.length)];                                                                                                                                                               
 
-              if (!pricesTable || pricesTable.rows.length === 0) {
+                  return { type: 'sell', symbol: symbol, amount: 0.3 };                                                                                                                                                                             
 
-                  return { type: 'hold', symbol: 'AAPL', amount: 0 };
+              } else {                                                                                                                                                                                                                              
 
-              }
+                  if (Math.random() > 0.7) {                                                                                                                                                                                                        
 
+                      const action = Math.random() > 0.5 ? 'buy' : 'sell';                                                                                                                                                                          
 
+                      const symbol = symbols[Math.floor(Math.random() * symbols.length)];                                                                                                                                                           
 
-              // Get current prices and positions
+                      return { type: action, symbol: symbol, amount: 0.15 };                                                                                                                                                                        
 
-              const symbols = ['AAPL', 'MSFT', 'GOOGL'];
+                  }                                                                                                                                                                                                                                 
 
-              const portfolioValue = parseFloat(document.getElementById('portfolioValue').textContent.replace(/[$,]/g, ''));
+                  return { type: 'hold', symbol: 'AAPL', amount: 0 };                                                                                                                                                                               
 
-              const cashBalance =
+              }                                                                                                                                                                                                                                     
 
-  parseFloat(document.getElementById('cashBalance').textContent.replace(/[$,]/g,
+          }                                                                                                                                                                                                                                         
 
-   ''));
+                                                                                                                                                                                                                                                    
 
+          // Initialize                                                                                                                                                                                                                             
 
+          async function initialize() {
 
-              // Strategy: Buy if cash > 30%, Sell if cash < 10%, otherwise hold
+              const healthy = await checkHealth();                                                                                                                                                                                                  
 
-              if (cashBalance / portfolioValue > 0.3) {
+              if (healthy) {                                                                                                                                                                                                                        
 
-                  // Buy a random stock
+                  await loadTasks();                                                                                                                                                                                                                
 
-                  const symbol = symbols[Math.floor(Math.random() *
+                  await resetEnv();                                                                                                                                                                                                                 
 
-  symbols.length)];
+              }                                                                                                                                                                                                                                     
 
-                  return { type: 'buy', symbol: symbol, amount: 0.2 };
+          }                                                                                                                                                                                                                                         
 
-              } else if (cashBalance / portfolioValue < 0.1) {
+                                                                                                                                                                                                                                                    
 
-                  // Sell a random stock
+          initialize();                                                                                                                                                                                                                             
 
-                  const symbol = symbols[Math.floor(Math.random() *
+      </script>
 
-  symbols.length)];
+  </body>                                                                                                                                                                                                                                           
 
-                  return { type: 'sell', symbol: symbol, amount: 0.3 };
-
-              } else {
-
-                  // Diversify or hold
-
-                  if (Math.random() > 0.7) {
-
-                      const action = Math.random() > 0.5 ? 'buy' : 'sell';
-
-                      const symbol = symbols[Math.floor(Math.random() *
-
-  symbols.length)];
-
-                      return { type: action, symbol: symbol, amount: 0.15 };
-
-                  }
-
-                  return { type: 'hold', symbol: 'AAPL', amount: 0 };
-
-              }
-
-          }
-
-        function updateUI(obs, message = null) {
-            // Update metrics
-            document.getElementById('portfolioValue').textContent =
-                '$' + obs.portfolio_value.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-            document.getElementById('cashBalance').textContent =
-                '$' + obs.cash_balance.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-            document.getElementById('stepCount').textContent = obs.metadata.step;
-
-            const returnPct = ((obs.portfolio_value - initialBalance) / initialBalance * 100).toFixed(2);
-            document.getElementById('totalReturn').textContent = returnPct + '%';
-            document.getElementById('totalReturn').style.color = returnPct >= 0 ? '#48bb78' : '#f56565';
-
-            // Update prices table
-            currentPrices = obs.prices;
-            const tbody = document.getElementById('pricesTable');
-            tbody.innerHTML = '';
-
-            Object.entries(obs.prices).forEach(([symbol, price]) => {
-                const shares = obs.positions[symbol] || 0;
-                const value = shares * price;
-
-                const row = tbody.insertRow();
-                row.innerHTML = `
-                    <td><strong>${symbol}</strong></td>
-                    <td>$${price.toFixed(2)}</td>
-                    <td>${shares}</td>
-                    <td>$${value.toFixed(2)}</td>
-                `;
-            });
-
-            if (message) {
-                showAlert(message, 'success');
-            }
-        }
-
-        function showAlert(message, type) {
-            const alertBox = document.getElementById('alertBox');
-            const alertClass = type === 'intervention' ? 'intervention-alert' : 'success-alert';
-            alertBox.innerHTML = `<div class="${alertClass}">${message}</div>`;
-
-            setTimeout(() => {
-                alertBox.innerHTML = '';
-            }, 5000);
-        }
-
-         // Initialize                                                         
-
-          async function initialize() {                                         
-
-              const healthy = await checkHealth();                              
-
-              if (healthy) {                                                    
-
-                  await loadTasks();                                            
-
-                  await resetEnv();                                             
-
-              }                                                                 
-
-          }                                                                     
-
-                                                                                
-
-          initialize();  
-    </script>
-</body>
-</html>
+  </html>

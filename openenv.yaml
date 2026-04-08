@@ -74,7 +74,7 @@ observation_space:
 
 # Metadata
 author: FinPulse Team
-repository: https://github.com/saikiranworkmail13-cell/fin-pulse
+repository: https://github.com/KodiBharadwaj/finpulse
 license: BSD
 tags:
   - trading
