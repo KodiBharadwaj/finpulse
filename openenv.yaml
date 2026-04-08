@@ -4,7 +4,7 @@ version: 1.0.0
 description: AI Trading Environment with Emotional Intelligence
 type: space
 runtime: fastapi
-app: server.app:app
+app: src.envs.finpulse_env.server.app:app
 port: 8000
 
 # Task definitions

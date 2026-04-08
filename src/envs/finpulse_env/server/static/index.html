@@ -172,6 +172,18 @@
         .badge-buy { background: #c6f6d5; color: #22543d; }
         .badge-sell { background: #fed7d7; color: #742a2a; }
         .badge-hold { background: #e2e8f0; color: #4a5568; }
+          .badge-buy { background: #c6f6d5; color: #22543d; }
+
+          .badge-sell { background: #fed7d7; color: #742a2a; }
+
+          .badge-hold { background: #e2e8f0; color: #4a5568; }
+
+          .badge-easy { background: #c6f6d5; color: #22543d; }
+
+          .badge-medium { background: #feebc8; color: #7c2d12; }
+
+          .badge-hard { background: #fed7d7; color: #742a2a; }
+
         .status-indicator {
             display: inline-block;
             width: 10px;
@@ -193,6 +205,112 @@
                 <span id="statusText">Connecting...</span>
             </p>
         </div>
+
+         </div>
+
+
+
+          <div class="card">
+
+              <h2>🎯 Select Challenge Level</h2>
+
+              <div class="task-info" id="currentTaskInfo">
+
+                  <div style="display: flex; justify-content: space-between;
+
+  align-items: center; margin-bottom: 15px;">
+
+                      <div>
+
+                          <div style="font-size: 1.2em; font-weight: bold;
+
+  color: #667eea;" id="taskName">Loading...</div>
+
+                          <div style="font-size: 0.9em; color: #718096;
+
+  margin-top: 5px;" id="taskDescription">Select a difficulty level</div>
+
+                      </div>
+
+                      <span class="badge" id="taskBadge" style="font-size: 1em;
+
+  padding: 8px 16px;">-</span>
+
+                  </div>
+
+                  <div style="display: grid; grid-template-columns: repeat(3,
+
+  1fr); gap: 10px; font-size: 0.9em;">
+
+                      <div style="background: #f7fafc; padding: 10px;
+
+  border-radius: 6px;">
+
+                          <div style="color: #718096;">Max Steps</div>
+
+                          <div style="font-weight: bold; color: #2d3748;" 
+
+  id="taskMaxSteps">-</div>
+
+                      </div>
+
+                      <div style="background: #f7fafc; padding: 10px;
+
+  border-radius: 6px;">
+
+                          <div style="color: #718096;">Success Target</div>
+
+                          <div style="font-weight: bold; color: #2d3748;" 
+
+  id="taskSuccessThreshold">-</div>
+
+                      </div>
+
+                      <div style="background: #f7fafc; padding: 10px;
+
+  border-radius: 6px;">
+
+                          <div style="color: #718096;">Difficulty</div>
+
+                          <div style="font-weight: bold; color: #2d3748;" 
+
+  id="taskDifficulty">-</div>
+
+                      </div>
+
+                  </div>
+
+              </div>
+
+              <div class="action-panel" style="margin-top: 20px;">
+
+                  <button onclick="selectTask('conservative_trading')" 
+
+  style="background: #48bb78;">
+
+                      😌 Easy
+
+                  </button>
+
+                  <button onclick="selectTask('balanced_trading')" 
+
+  style="background: #ed8936;">
+
+                      ⚖️  Medium
+
+                  </button>
+
+                  <button onclick="selectTask('aggressive_growth')" 
+
+  style="background: #f56565;">
+
+                      🚀 Hard
+
+                  </button>
+
+              </div>
+
+          </div>
 
         <div class="card">
             <h2>📊 Portfolio Overview</h2>
@@ -262,9 +380,72 @@
                 <button onclick="trade('sell', 'GOOGL')" style="background: #f56565;">📉 Sell GOOGL</button>
             </div>
             <div class="action-panel" style="margin-top: 10px;">
-                <button onclick="trade('hold')" style="background: #718096;">⏸️ Hold Position</button>
-                <button onclick="resetEnv()" style="background: #ed8936;">🔄 Reset Episode</button>
-            </div>
+
+                  <button onclick="trade('hold')" style="background:
+
+  #718096;">⏸️  Hold Position</button>
+
+                  <button onclick="resetEnv()" style="background: #ed8936;">🔄
+
+  Reset Episode</button>
+
+              </div>
+
+              <div class="action-panel" style="margin-top: 10px;">
+
+                  <button id="autoTradeBtn" onclick="startAutoTrade()" 
+
+  style="background: #9f7aea;">
+
+                      🤖 Auto-Trade (50 Steps)
+
+                  </button>
+
+                  <button id="stopAutoBtn" onclick="stopAutoTrade()" 
+
+  style="background: #e53e3e; display: none;">
+
+                      ⛔ Stop Auto-Trade
+
+                  </button>
+
+              </div>
+
+              <div id="autoTradeProgress" style="margin-top: 15px; display:
+
+  none;">
+
+                  <div style="background: #f7fafc; padding: 15px; border-radius:
+
+   8px;">
+
+                      <div style="font-weight: 600; margin-bottom:
+
+  10px;">Auto-Trading Progress</div>
+
+                      <div style="background: #e2e8f0; height: 10px;
+
+  border-radius: 5px; overflow: hidden;">
+
+                          <div id="progressBar" style="background: #667eea;
+
+  height: 100%; width: 0%; transition: width 0.3s;"></div>
+
+                      </div>
+
+                      <div style="margin-top: 10px; font-size: 0.9em; color:
+
+  #4a5568;">
+
+                          Step <span id="autoStepCount">0</span> / 50 | Profit:
+
+  <span id="autoProfitCount" style="font-weight: bold;">+0.00%</span>
+
+                      </div>
+
+                  </div>
+
+              </div>
             <div id="alertBox"></div>
         </div>
     </div>
@@ -280,6 +461,142 @@
         document.getElementById('confidenceSlider').addEventListener('input', (e) => {
             document.getElementById('confidenceValue').textContent = e.target.value;
         });
+
+          let allTasks = {};
+
+          let currentTask = null;
+
+
+
+          async function loadTasks() {
+
+              try {
+
+                  const response = await fetch('/tasks');
+
+                  allTasks = await response.json();
+
+                  await loadCurrentTask();
+
+              } catch (error) {
+
+                  console.error('Failed to load tasks:', error);
+
+              }
+
+          }
+
+
+
+          async function loadCurrentTask() {
+
+              try {
+
+                  const response = await fetch('/current_task');
+
+                  currentTask = await response.json();
+
+                  updateTaskDisplay(currentTask);
+
+              } catch (error) {
+
+                  console.error('Failed to load current task:', error);
+
+              }
+
+          }
+
+
+
+          async function selectTask(taskId) {
+
+              try {
+
+                  const response = await fetch('/set_task', {
+
+                      method: 'POST',
+
+                      headers: { 'Content-Type': 'application/json' },
+
+                      body: JSON.stringify({ task: taskId })
+
+                  });
+
+
+
+                  if (!response.ok) {
+
+                      const error = await response.json();
+
+                      showAlert(`Failed to switch task: ${error.detail}`,
+
+  'intervention');
+
+                      return;
+
+                  }
+
+
+
+                  currentTask = await response.json();
+
+                  updateTaskDisplay(currentTask);
+
+                  showAlert(`✅ Switched to ${currentTask.name}! Click Reset to
+
+  start.`, 'success');
+
+              } catch (error) {
+
+                  showAlert(`Error switching task: ${error.message}`,
+
+  'intervention');
+
+              }
+
+          }
+
+
+
+          function updateTaskDisplay(taskInfo) {
+
+              document.getElementById('taskName').textContent = taskInfo.name;
+
+              document.getElementById('taskMaxSteps').textContent =
+
+  taskInfo.max_steps;
+
+              document.getElementById('taskSuccessThreshold').textContent =
+
+                  (taskInfo.success_threshold * 100).toFixed(0) + '%';
+
+              document.getElementById('taskDifficulty').textContent =
+
+                  taskInfo.difficulty.charAt(0).toUpperCase() +
+
+  taskInfo.difficulty.slice(1);
+
+
+
+              const badge = document.getElementById('taskBadge');
+
+              badge.textContent = taskInfo.difficulty.toUpperCase();
+
+              badge.className = 'badge badge-' + taskInfo.difficulty;
+
+
+
+              // Update description from allTasks if available
+
+              if (allTasks && allTasks[taskInfo.task]) {
+
+                  document.getElementById('taskDescription').textContent =
+
+                      allTasks[taskInfo.task].description;
+
+              }
+
+          }
 
         async function checkHealth() {
             try {
@@ -303,34 +620,310 @@
             updateUI(obs, 'Environment reset! Ready to trade.');
         }
 
-        async function trade(actionType, symbol = 'AAPL') {
-            const stress = parseInt(document.getElementById('stressSlider').value);
-            const confidence = parseInt(document.getElementById('confidenceSlider').value);
 
-            const action = {
-                action_type: actionType,
-                symbol: symbol,
-                amount_pct: 0.3,
-                user_stress: stress,
-                user_confidence: confidence
-            };
+let autoTradeRunning = false;
 
-            const response = await fetch('/step', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(action)
-            });
-            const obs = await response.json();
+          let autoTradeSteps = 0;
 
-            if (obs.intervention) {
-                showAlert(obs.intervention_reason, 'intervention');
-            } else {
-                const actionText = actionType === 'hold' ? 'Held position' : `${actionType.toUpperCase()} ${symbol}`;
-                showAlert(`✅ ${actionText} | Reward: +${obs.reward.toFixed(2)}`, 'success');
-            }
+          const AUTO_TRADE_MAX_STEPS = 50;
 
-            updateUI(obs);
-        }
+
+
+          async function startAutoTrade() {
+
+              if (autoTradeRunning) return;
+
+
+
+              autoTradeRunning = true;
+
+              autoTradeSteps = 0;
+
+
+
+              // Show progress UI
+
+              document.getElementById('autoTradeProgress').style.display =
+
+  'block';
+
+              document.getElementById('autoTradeBtn').style.display = 'none';
+
+              document.getElementById('stopAutoBtn').style.display = 'block';
+
+
+
+              // Disable manual trading buttons
+
+              const buttons = document.querySelectorAll('.action-panel button');
+
+              buttons.forEach(btn => {
+
+                  if (btn.id !== 'stopAutoBtn') btn.disabled = true;
+
+              });
+
+
+
+              showAlert('🤖 Auto-trading started! Using smart strategy...',
+
+  'success');
+
+
+
+              // Run trading loop
+
+              await autoTradeLoop();
+
+          }
+
+
+
+          function stopAutoTrade() {
+
+              autoTradeRunning = false;
+
+              document.getElementById('autoTradeBtn').style.display = 'block';
+
+              document.getElementById('stopAutoBtn').style.display = 'none';
+
+              document.getElementById('autoTradeProgress').style.display =
+
+  'none';
+
+
+
+              // Re-enable buttons
+
+              const buttons = document.querySelectorAll('.action-panel button');
+
+              buttons.forEach(btn => btn.disabled = false);
+
+
+
+              showAlert('⛔ Auto-trading stopped!', 'intervention');
+
+          }
+
+
+
+          async function autoTradeLoop() {
+
+              const startingValue = parseFloat(document.getElementById('portfolioValue').textContent.replace(/[$,]/g, ''));
+
+
+
+              while (autoTradeRunning && autoTradeSteps < AUTO_TRADE_MAX_STEPS)
+
+  {
+
+                  autoTradeSteps++;
+
+
+
+                  // Update progress
+
+                  const progress = (autoTradeSteps / AUTO_TRADE_MAX_STEPS) *
+
+  100;
+
+                  document.getElementById('progressBar').style.width = progress
+
+  + '%';
+
+                  document.getElementById('autoStepCount').textContent =
+
+  autoTradeSteps;
+
+
+
+                  // Smart trading strategy
+
+                  const action = await decideSmartAction();
+
+
+
+                  // Execute trade
+
+                  try {
+
+                      const stress = Math.floor(Math.random() * 3) + 4; 
+
+                      const confidence = Math.floor(Math.random() * 3) + 5; 
+
+
+
+                      const response = await fetch('/step', {
+
+                          method: 'POST',
+
+                          headers: { 'Content-Type': 'application/json' },
+
+                          body: JSON.stringify({
+
+                              action_type: action.type,
+
+                              symbol: action.symbol,
+
+                              amount_pct: action.amount,
+
+                              user_stress: stress,
+
+                              user_confidence: confidence
+
+                          })
+
+                      });
+
+
+
+                      const obs = await response.json();
+
+                      updateUI(obs, null);
+
+
+
+                      // Update profit
+
+                      const currentValue = obs.portfolio_value;
+
+                      const profit = ((currentValue - startingValue) /
+
+  startingValue) * 100;
+
+                      const profitSpan =
+
+  document.getElementById('autoProfitCount');
+
+                      profitSpan.textContent = (profit >= 0 ? '+' : '') +
+
+  profit.toFixed(2) + '%';
+
+                      profitSpan.style.color = profit >= 0 ? '#48bb78' :
+
+  '#f56565';
+
+
+
+                      // Small delay between trades
+
+                      await new Promise(resolve => setTimeout(resolve, 500));
+
+
+
+                  } catch (error) {
+
+                      console.error('Auto-trade error:', error);
+
+                      stopAutoTrade();
+
+                      showAlert('❌ Auto-trade error: ' + error.message,
+
+  'intervention');
+
+                      return;
+
+                  }
+
+              }
+
+
+
+              // Finished
+
+              if (autoTradeSteps >= AUTO_TRADE_MAX_STEPS) {
+
+                  const finalValue = parseFloat(document.getElementById('portfolioValue').textContent.replace(/[$,]/g, ''));
+
+                  const totalProfit = ((finalValue - startingValue) /
+
+  startingValue) * 100;
+
+                  showAlert(`✅ Auto-trading complete! Total return:
+
+  ${totalProfit.toFixed(2)}%`, 'success');
+
+              }
+
+
+
+              stopAutoTrade();
+
+          }
+
+
+
+          async function decideSmartAction() {
+
+              // Simple momentum strategy
+
+              const pricesTable = document.getElementById('pricesTable');
+
+              if (!pricesTable || pricesTable.rows.length === 0) {
+
+                  return { type: 'hold', symbol: 'AAPL', amount: 0 };
+
+              }
+
+
+
+              // Get current prices and positions
+
+              const symbols = ['AAPL', 'MSFT', 'GOOGL'];
+
+              const portfolioValue = parseFloat(document.getElementById('portfolioValue').textContent.replace(/[$,]/g, ''));
+
+              const cashBalance =
+
+  parseFloat(document.getElementById('cashBalance').textContent.replace(/[$,]/g,
+
+   ''));
+
+
+
+              // Strategy: Buy if cash > 30%, Sell if cash < 10%, otherwise hold
+
+              if (cashBalance / portfolioValue > 0.3) {
+
+                  // Buy a random stock
+
+                  const symbol = symbols[Math.floor(Math.random() *
+
+  symbols.length)];
+
+                  return { type: 'buy', symbol: symbol, amount: 0.2 };
+
+              } else if (cashBalance / portfolioValue < 0.1) {
+
+                  // Sell a random stock
+
+                  const symbol = symbols[Math.floor(Math.random() *
+
+  symbols.length)];
+
+                  return { type: 'sell', symbol: symbol, amount: 0.3 };
+
+              } else {
+
+                  // Diversify or hold
+
+                  if (Math.random() > 0.7) {
+
+                      const action = Math.random() > 0.5 ? 'buy' : 'sell';
+
+                      const symbol = symbols[Math.floor(Math.random() *
+
+  symbols.length)];
+
+                      return { type: action, symbol: symbol, amount: 0.15 };
+
+                  }
+
+                  return { type: 'hold', symbol: 'AAPL', amount: 0 };
+
+              }
+
+          }
 
         function updateUI(obs, message = null) {
             // Update metrics
@@ -377,12 +970,25 @@
             }, 5000);
         }
 
-        // Initialize
-        checkHealth().then(healthy => {
-            if (healthy) {
-                resetEnv();
-            }
-        });
+         // Initialize                                                         
+
+          async function initialize() {                                         
+
+              const healthy = await checkHealth();                              
+
+              if (healthy) {                                                    
+
+                  await loadTasks();                                            
+
+                  await resetEnv();                                             
+
+              }                                                                 
+
+          }                                                                     
+
+                                                                                
+
+          initialize();  
     </script>
 </body>
 </html>
