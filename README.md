@@ -89,14 +89,12 @@ FinPulse includes **3 trading tasks** with increasing difficulty:
 
 **1. Clone Repository**
 ```bash
-git clone https://github.com/saikiranworkmail13-cell/fin-pulse.git
-cd fin-pulse
+git clone https://github.com/KodiBharadwaj/finpulse.git
+cd finpulse
 ```
 
 **2. Configure Environment (Optional)**
 ```bash
-# Copy environment template
-cp .env.example .env
 
 # Edit .env and add your credentials
 nano .env
@@ -118,22 +116,19 @@ ALPACA_SECRET_KEY=your_alpaca_secret
 **3. Start Environment Server**
 ```bash
 # Build and start Docker container
-docker-compose up --build -d
+docker build -t finpulse .
 
 # Verify server is running
-curl http://localhost:8000/health
+docker run -p 8000:8000 finpulse
 # Expected: {"status":"healthy"}
 ```
 
-**4. Install Client Dependencies**
-```bash
-pip install -r requirements-client.txt
-```
 
-**5. Run Baseline Inference**
+
+**5. Run Baseline Inference deployment steps**
 ```bash
 # Test all 3 tasks
-python inference.py
+python inference.py `
 ```
 
 **Expected output:**
