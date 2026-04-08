@@ -19,7 +19,11 @@ import textwrap
 from typing import List, Optional, Dict
 import json
 
-from openai import OpenAI
+try:
+    from openai import OpenAI
+except Exception as e:
+    print("OpenAI import failed:", e)
+    OpenAI = None
 
 from dotenv import load_dotenv
 load_dotenv()
